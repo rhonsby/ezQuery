@@ -1,7 +1,13 @@
 (function(root) {
-  root.$ez = function(selector) {
-    var nodeList = document.querySelectorAll(selector);
-    var elements = Array.prototype.slice.call(nodeList);
+  root.$ez = function(arg) {
+    var elements, nodeList;
+
+    if (arg instanceof HTMLElement) {
+      elements = [arg];
+    } else {
+      nodeList = document.querySelectorAll(arg);
+      elements = Array.prototype.slice.call(nodeList);
+    }
 
     return new DOMNodeCollection(elements);
   };
