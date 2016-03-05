@@ -15,4 +15,14 @@
   function DOMNodeCollection(elements) {
     this.elements = elements;
   }
+
+  DOMNodeCollection.prototype.html = function(innerHTML) {
+    if (typeof innerHTML === 'undefined') {
+      return this.elements[0].innerHTML;
+    } else {
+      this.elements.forEach(function(el) {
+        el.innerHTML = innerHTML;
+      });
+    }
+  };
 })(this);
