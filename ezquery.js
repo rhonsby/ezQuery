@@ -16,18 +16,24 @@
     this.elements = elements;
   }
 
+  DOMNodeCollection.prototype.each = function(callback, caller) {
+    this.elements.forEach(function(el) {
+      callback.call(caller, el);
+    });
+  };
+
   DOMNodeCollection.prototype.html = function(innerHTML) {
     if (typeof innerHTML === 'undefined') {
       return this.elements[0].innerHTML;
     } else {
-      this.elements.forEach(function(el) {
+      this.each(function(el) {
         el.innerHTML = innerHTML;
       });
     }
   };
 
   DOMNodeCollection.prototype.empty = function() {
-    this.elements.forEach(function(el) {
+    this.each(function(el) {
       el.innerHTML = '';
     });
   };
