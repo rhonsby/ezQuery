@@ -25,4 +25,10 @@
       });
     }
   };
+
+  DOMNodeCollection.prototype.empty = function() {
+    this.elements.forEach(function(el) {
+      el.innerHTML = '';
+    });
+  };
 })(this);
