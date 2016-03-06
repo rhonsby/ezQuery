@@ -1,5 +1,17 @@
 (function(root) {
-  root.$ez = function(arg) {
+  var onReadyFunctions = [];
+
+  var tid = setInterval(function() {
+    if (document.readyState === 'complete') {
+      onReadyFunctions.forEach(function(func) {
+        func();
+      });
+
+      clearInterval(tid);
+    }
+  }, 100);
+
+  function createNewCollection(arg) {
     var elements, nodeList;
 
     if (arg instanceof HTMLElement) {
@@ -10,7 +22,15 @@
     }
 
     return new DOMNodeCollection(elements);
-  };
+  }
+
+  function callFunctionOnReady(func) {
+    if (document.readyState === 'complete') {
+      func();
+    } else {
+      onReadyFunctions.push(func);
+    }
+  }
 
   function DOMNodeCollection(elements) {
     this.elements = elements;
@@ -162,5 +182,21 @@
     }
 
     return this;
+  };
+
+  DOMNodeCollection.prototype.on = function(type, callback) {
+    this.each(function(el) {
+      el.addEventListener(type, callback);
+    });
+
+    return this;
+  };
+
+  root.$ez = function(arg) {
+    if (arg instanceof Function) {
+      callFunctionOnReady(arg);
+    } else {
+      return createNewCollection(arg);
+    }
   };
 })(this);
