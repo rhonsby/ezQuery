@@ -129,4 +129,22 @@
 
     return new DOMNodeCollection(parentElements);
   };
+
+  DOMNodeCollection.prototype.find = function(selector) {
+    var elements;
+    var matchingElements = [];
+
+    if (selector) {
+      this.each(function(el) {
+        var elements = el.querySelectorAll(selector);
+        elements = Array.prototype.slice.call(elements);
+
+        elements.forEach(function(matchingEl) {
+          matchingElements.push(matchingEl);
+        });;
+      });
+    }
+
+    return new DOMNodeCollection(matchingElements);
+  };
 })(this);
