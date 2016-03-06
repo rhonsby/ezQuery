@@ -37,4 +37,24 @@
       el.innerHTML = '';
     });
   };
+
+  DOMNodeCollection.prototype.append = function(arg) {
+    var that = this;
+
+    function appendToAll(value) {
+      that.each(function(el) {
+        el.innerHTML = el.innerHTML + value;
+      });
+    }
+
+    if (arg instanceof DOMNodeCollection) {
+      arg.each(function(el) {
+        appendToAll(el.outerHTML);
+      });
+    } else if (arg instanceof HTMLElement) {
+      appendToAll(arg.outerHTML);
+    } else {
+      appendToAll(arg.toString());
+    }
+  };
 })(this);
