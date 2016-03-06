@@ -192,7 +192,7 @@
     return this;
   };
 
-  root.$ez = function(arg) {
+  var $ez = root.$ez = function(arg) {
     if (arg instanceof Function) {
       callFunctionOnReady(arg);
     } else {
@@ -200,7 +200,7 @@
     }
   };
 
-  root.$ez.extend = function() {
+  $ez.extend = function() {
     var objects = Array.prototype.slice.call(arguments);
     var extendedObj, otherObj;
 
@@ -220,5 +220,39 @@
 
       return extendedObj;
     }
+  };
+
+  $ez.ajax = function(options) {
+    var defaults = {
+      type: 'GET',
+      success: function() {},
+      error: function() {},
+      complete: function() {},
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    };
+    options = this.extend(defaults, options);
+
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function() {
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        var response = JSON.parse(httpRequest.responseText);
+
+        if (httpRequest.status === 200) {
+          options.success(response);
+        } else {
+          options.error(response);
+        }
+
+        options.complete();
+      }
+    };
+
+    httpRequest.open(options.type, options.url);
+
+    if (options.type === 'POST') {
+      httpRequest.setRequestHeader('Content-Type', options.contentType);
+    }
+
+    httpRequest.send(options.data);
   };
 })(this);
