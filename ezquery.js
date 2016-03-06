@@ -147,4 +147,20 @@
 
     return new DOMNodeCollection(matchingElements);
   };
+
+  DOMNodeCollection.prototype.remove = function(selector) {
+    if (selector) {
+      this.each(function(el) {
+        if (el.matches(selector)) {
+          el.remove();
+        }
+      });
+    } else {
+      this.each(function(el) {
+        el.remove();
+      });
+    }
+
+    return this;
+  };
 })(this);
