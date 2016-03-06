@@ -199,4 +199,26 @@
       return createNewCollection(arg);
     }
   };
+
+  root.$ez.extend = function() {
+    var objects = Array.prototype.slice.call(arguments);
+    var extendedObj, otherObj;
+
+    if (!objects.length) {
+      return
+    } else {
+       extendedObj = objects[0];
+
+      for (var i = 1; i < objects.length; i++) {
+        otherObj = objects[i];
+        for (var prop in otherObj) {
+          if (otherObj.hasOwnProperty(prop)) {
+            extendedObj[prop] = otherObj[prop];
+          }
+        }
+      }
+
+      return extendedObj;
+    }
+  };
 })(this);
