@@ -97,4 +97,18 @@
 
     return this;
   };
+
+  DOMNodeCollection.prototype.children = function() {
+    var childNodes = [];
+    var children;
+
+    this.each(function(el) {
+      children = Array.prototype.slice.call(el.children);
+      children.forEach(function(child) {
+        childNodes.push(child);
+      });
+    });
+
+    return new DOMNodeCollection(childNodes);
+  };
 })(this);
