@@ -111,4 +111,22 @@
 
     return new DOMNodeCollection(childNodes);
   };
+
+  DOMNodeCollection.prototype.parent = function(selector) {
+    var parentElements = [];
+    var parentElement;
+    selector = selector || '*';
+
+    this.each(function(el) {
+      parentElement = el.parentElement;
+
+      if (parentElement && parentElement.matches(selector)) {
+        parentElements.push(parentElement);
+      }
+    });
+
+    window.els = parentElements;
+
+    return new DOMNodeCollection(parentElements);
+  };
 })(this);
