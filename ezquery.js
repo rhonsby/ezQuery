@@ -57,4 +57,14 @@
       appendToAll(arg.toString());
     }
   };
+
+  DOMNodeCollection.prototype.attr = function(attributeName, value) {
+    if (typeof value === 'undefined' && this.elements.length) {
+      return this.elements[0].getAttribute(attributeName);
+    } else {
+      this.each(function(el) {
+        el.setAttribute(attributeName, value);
+      });
+    }
+  };
 })(this);
