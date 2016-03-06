@@ -67,4 +67,24 @@
       });
     }
   };
+
+  DOMNodeCollection.prototype.addClass = function() {
+    var classes = Array.prototype.slice.call(arguments);
+
+    classes.forEach(function(className) {
+      this.each(function(el) {
+        el.classList.add(className);
+      });
+    }, this);
+  };
+
+  DOMNodeCollection.prototype.removeClass = function(className) {
+    var classes = Array.prototype.slice.call(arguments);
+
+    classes.forEach(function(className) {
+      this.each(function(el) {
+        el.classList.remove(className);
+      });
+    }, this);
+  };
 })(this);
