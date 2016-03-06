@@ -20,10 +20,12 @@
     this.elements.forEach(function(el) {
       callback.call(caller, el);
     });
+
+    return this;
   };
 
   DOMNodeCollection.prototype.html = function(innerHTML) {
-    if (typeof innerHTML === 'undefined') {
+    if (typeof innerHTML === 'undefined' && this.elements.length) {
       return this.elements[0].innerHTML;
     } else {
       this.each(function(el) {
@@ -36,6 +38,8 @@
     this.each(function(el) {
       el.innerHTML = '';
     });
+
+    return this;
   };
 
   DOMNodeCollection.prototype.append = function(arg) {
@@ -56,6 +60,8 @@
     } else {
       appendToAll(arg.toString());
     }
+
+    return this;
   };
 
   DOMNodeCollection.prototype.attr = function(attributeName, value) {
@@ -76,6 +82,8 @@
         el.classList.add(className);
       });
     }, this);
+
+    return this;
   };
 
   DOMNodeCollection.prototype.removeClass = function(className) {
@@ -86,5 +94,7 @@
         el.classList.remove(className);
       });
     }, this);
+
+    return this;
   };
 })(this);
